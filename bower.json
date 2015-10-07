@@ -1,0 +1,17 @@
+{
+  "name": "Week-6",
+  "version": "0.0.0",
+  "authors": [
+    "Scott Pullen <s.pullen05@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5"
+  }
+}

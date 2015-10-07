@@ -13,12 +13,14 @@
 1. Initialize Bower: `bower init`
 2. Use Bower to install Bootstrap and jQuery
 3. Change the references to use the bower version in `index.html`
+  * `<script src="../bower_components/...`
 
 ## Set up Karma
 *our favorite part*
 
 1. `karma init`
-2. Reference the `bower_components` versions of the vendor
+2. Reference the `bower_components` versions of the vendor files
+  * *make sure the vendor files are the first files listed for karma and that jquery comes before bootstrap*
 3. `karma start`
 4. Fix the inevitable errors
 

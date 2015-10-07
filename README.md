@@ -7,7 +7,7 @@
 2. Use NPM to install Gulp, and Bower
   * bower needs to be installed globally: `npm install -g bower`
 
-## Use Bower for a simple Bootstrap project
+## Use Bower for this project
 *we'll do this part together*
 
 1. Initialize Bower: `bower init`

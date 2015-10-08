@@ -31,7 +31,8 @@ gulp.task('clean', function() {
 
 gulp.task('buildVendor', function() {
   return gulp.src([
-            'bower_components/jquery/dist/jquery.js', 
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/angular/angular.js',
             'bower_components/bootstrap/dist/js/bootstrap.js',
             'src/js/app.js'
           ]).pipe(concat('app.js'))
@@ -55,7 +56,7 @@ gulp.task('moveHTML', function() {
 gulp.task('build', ['clean', 'buildCSS', 'buildVendor', 'moveHTML']);
 
 gulp.task('watch', function() {
-  gulp.watch(['./src/js/app/**/*.js', './src/js/tests/**/*.js', './src/css/**/*.css'], ['test', 'build']);
+  gulp.watch(['./src/js/app/**/*.js', './src/js/tests/**/*.js', './src/css/**/*.css', './src/**/*.html'], ['test', 'build']);
 });
 
 gulp.task('connect', function() {
@@ -64,3 +65,5 @@ gulp.task('connect', function() {
     livereload: true
   });
 });
+
+gulp.task('default', ['clean', 'build', 'watch', 'connect']);

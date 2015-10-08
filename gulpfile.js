@@ -8,6 +8,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var connect = require('gulp-connect');
+var del = require('del');
 
 gulp.task('jshint', function() {
   return gulp.src('./js/app/**/*.js')
@@ -23,6 +24,10 @@ gulp.task('karma', function(done) {
 });
 
 gulp.task('test', ['jshint', 'karma']);
+
+gulp.task('clean', function() {
+  del('dist/**/*')
+});
 
 gulp.task('buildVendor', function() {
   return gulp.src([
@@ -47,7 +52,7 @@ gulp.task('moveHTML', function() {
   return gulp.src('src/**/*.html').pipe(gulp.dest('./dist'));
 });
 
-gulp.task('build', ['buildCSS', 'buildVendor', 'moveHTML']);
+gulp.task('build', ['clean', 'buildCSS', 'buildVendor', 'moveHTML']);
 
 gulp.task('watch', function() {
   gulp.watch(['./src/js/app/**/*.js', './src/js/tests/**/*.js', './src/css/**/*.css'], ['test', 'build']);

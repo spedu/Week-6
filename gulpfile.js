@@ -7,21 +7,55 @@ var stylish = require('jshint-stylish');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
+var connect = require('gulp-connect');
 
-gulp.task('buildVendor', function() {
-  gulp.src([
-    'bower_components/jquery/dist/jquery.js', 
-    'bower_components/bootstrap/dist/js/bootstrap.js'
-  ]).pipe(concat('vendor.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('./dist'));
+gulp.task('jshint', function() {
+  return gulp.src('./js/app/**/*.js')
+          .pipe(jshint())
+          .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('buildCss', function() {
-  gulp.src([
-    'bower_components/bootstrap/dist/css/bootstrap.css',
-    'src/css/**/*.css'
-  ]).pipe(concat('styles.css'))
-    .pipe(minifyCss())
-    .pipe(gulp.dest('./dist'))
+gulp.task('karma', function(done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js', 
+    singleRun: true
+  }, done).start();
+});
+
+gulp.task('test', ['jshint', 'karma']);
+
+gulp.task('buildVendor', function() {
+  return gulp.src([
+            'bower_components/jquery/dist/jquery.js', 
+            'bower_components/bootstrap/dist/js/bootstrap.js',
+            'src/js/app.js'
+          ]).pipe(concat('app.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('./dist'));
+});
+
+gulp.task('buildCSS', function() {
+  return gulp.src([
+            'bower_components/bootstrap/dist/css/bootstrap.css',
+            'src/css/**/*.css'
+          ]).pipe(concat('styles.css'))
+            .pipe(minifyCss())
+            .pipe(gulp.dest('./dist'))
+});
+
+gulp.task('moveHTML', function() {
+  return gulp.src('src/**/*.html').pipe(gulp.dest('./dist'));
+});
+
+gulp.task('build', ['buildCSS', 'buildVendor', 'moveHTML']);
+
+gulp.task('watch', function() {
+  gulp.watch(['./src/js/app/**/*.js', './src/js/tests/**/*.js', './src/css/**/*.css'], ['test', 'build']);
+});
+
+gulp.task('connect', function() {
+  connect.server({
+    root: 'dist',
+    livereload: true
+  });
 });
